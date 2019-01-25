@@ -1,21 +1,32 @@
 var inputObject = {
-  "preroll": "",
-  "sting": "",
-  "postroll": "",
-  "parameters": {}
-}
+  'preroll': '',
+  'sting': '',
+  'postroll': '',
+  'parameters': {}
+};
 
-function click() {
-  inputObject.preroll = document.querySelector('.js-input').value;
+function handleFormSubmit(event) {
+  event.preventDefault();
+  
+  var formElements = event.target.elements;
 
-  chrome.tabs.executeScript(null,
-    {code:"window.localStorage.setItem('Spieler.DFP.debugConfig', '" + JSON.stringify(inputObject) +  "')"});
+  for (var i = 0; i < formElements.length; i++) {
+    if (formElements[i].name in inputObject) {
+      inputObject[formElements[i].name] = formElements[i].value;
+    }
+  }
+
+  chrome.tabs.executeScript(
+    null, {
+      code: "window.localStorage.setItem('Spieler.DFP.debugConfig', '" + JSON.stringify(inputObject) +  "')"
+    }
+  );
 
   window.close();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  var button = document.querySelector('.js-setVastTag');
+  var form = document.querySelector('[data-element="dfp-form"]');
 
-  button.addEventListener(('click'), click)
+  form.addEventListener('submit', handleFormSubmit);
 });

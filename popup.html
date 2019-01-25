@@ -40,12 +40,25 @@
   <script src="popup.js"></script>
 </head>
 <body>
-<form class="form">
-  <label>
-    <p>Preroll vast tag</p>
-    <input class="js-input input" placeholder="Preroll vast tag">
-  </label>
-  <button class="js-setVastTag">set vast tag</button>
-</form>
+  <form class="form" data-element="dfp-form">
+    <fieldset>
+      <legend>Set vast tag</legend>
+
+      <label for="fPreroll">
+        <span>Preroll</span>
+        <input name="preroll" if="fPreroll" class="input" placeholder="Preroll url">
+      </label>
+      <label for="fSting">
+        <span>Sting</span>
+        <input name="sting" id="fString" class="input" placeholder="Sting url">
+      </label>
+      <label for="fPostroll">
+        <span>Postroll</span>
+        <input name="postroll" id="fPostroll" class="input" placeholder="Postroll url">
+      </label>
+    </fieldset>
+
+    <button type="submit">Set vast tag</button>
+  </form>
 </body>
 </html>
