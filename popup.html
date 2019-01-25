@@ -1,15 +1,51 @@
-<!DOCTYPE html>
+
+<!doctype html>
 <html>
 <head>
+  <title>Set Page Color Popup</title>
   <style>
-    button {
-      height: 30px;
-      width: 30px;
-      outline: none;
+    body {
+      overflow: hidden;
+      margin: 0px;
+      padding: 10px;
+      background: white;
+    }
+
+    div:first-child {
+      margin-top: 0px;
+    }
+
+    div {
+      cursor: pointer;
+      text-align: center;
+      padding: 1px 3px;
+      font-family: sans-serif;
+      font-size: 0.8em;
+      width: 100px;
+      margin-top: 1px;
+      background: #cccccc;
+    }
+    div:hover {
+      background: #aaaaaa;
+    }
+
+    .form {
+      width: 250px;
+    }
+
+    .input {
+      width: 100%;
     }
   </style>
+  <script src="popup.js"></script>
 </head>
 <body>
-<button>test</button>
+<form class="form">
+  <label>
+    <p>Preroll vast tag</p>
+    <input class="js-input input" placeholder="Preroll vast tag">
+  </label>
+  <button class="js-setVastTag">set vast tag</button>
+</form>
 </body>
 </html>
