@@ -5,17 +5,16 @@ var inputObject = {
   "parameters": {}
 }
 
-function click(vastObject) {
-  var test = JSON.stringify(inputObject)
+function click() {
+  inputObject.preroll = document.querySelector('.js-input').value;
+
   chrome.tabs.executeScript(null,
-    {code:"window.localStorage.setItem('Spieler.DFP.debugConfig', '" + test +  "')"});
+    {code:"window.localStorage.setItem('Spieler.DFP.debugConfig', '" + JSON.stringify(inputObject) +  "')"});
 
   window.close();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-
-  var divs = document.querySelector('.js-input');
   var button = document.querySelector('.js-setVastTag');
 
   button.addEventListener(('click'), click)
