@@ -35,7 +35,7 @@ function handleClearLocalStorage() {
 
 document.addEventListener('DOMContentLoaded', function () {
   var form = document.querySelector('[data-element="dfp-form"]');
-  var clearLocalStorageButton = document.querySelector('[data-js-element="clear-local-storage"]')
+  var clearLocalStorageButton = document.querySelector('[data-js-element="clear-local-storage"]');
 
   clearLocalStorageButton.addEventListener('click', handleClearLocalStorage)
   form.addEventListener('submit', handleFormSubmit);
