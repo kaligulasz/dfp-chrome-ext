@@ -25,8 +25,18 @@ function handleFormSubmit(event) {
   window.close();
 }
 
+function handleClearLocalStorage() {
+  chrome.tabs.executeScript(
+    null, {
+      code: "window.localStorage.removeItem('Spieler.DFP.debugConfig')"
+    }
+  );
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   var form = document.querySelector('[data-element="dfp-form"]');
+  var clearLocalStorageButton = document.querySelector('[data-js-element="clear-local-storage"]')
 
+  clearLocalStorageButton.addEventListener('click', handleClearLocalStorage)
   form.addEventListener('submit', handleFormSubmit);
 });

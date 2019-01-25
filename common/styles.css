@@ -3,6 +3,7 @@ body {
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   font-size: 14px;
   margin: 0;
+  padding: 1em;
 }
 
 input, button {
@@ -10,12 +11,12 @@ input, button {
 }
 
 .form {
-  padding: 1em;
   width: 250px;
 }
 
 fieldset {
   border: 1px solid #d4d4d4;
+  border-radius: 0.15em;
 }
 
 .input-wrapper {
@@ -30,5 +31,36 @@ fieldset {
 
 .input {
   border: 1px solid #999;
+  border-radius: 0.15em;
   padding: 0.6em;
+}
+
+.button {
+  display: block;
+  background: #007bff;
+  color: #FFF;
+  border: 0;
+  border-radius: 0.15em;
+  padding: 10px;
+  width: 100%;
+}
+
+.button--primary {
+  margin-top: 1em;
+}
+
+.button--secondary {
+  background: #6c757d;
+  margin-top: 0.5em;
+}
+
+.title {
+  font-size: 1em;
+  color: #4d4f54;
+  margin: 0;
+  padding: 0;
+}
+
+.main-wrapper__primary {
+  margin-bottom: 1em;
 }
