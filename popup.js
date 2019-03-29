@@ -1,4 +1,4 @@
-var inputObject = {
+const inputObject = {
   'preroll': '',
   'sting': '',
   'postroll': '',
@@ -7,10 +7,10 @@ var inputObject = {
 
 function handleFormSubmit(event) {
   event.preventDefault();
-  
-  var formElements = event.target.elements;
 
-  for (var i = 0; i < formElements.length; i++) {
+  const formElements = event.target.elements;
+
+  for (let i = 0; i < formElements.length; i++) {
     if (formElements[i].name in inputObject) {
       inputObject[formElements[i].name] = formElements[i].value;
     }
@@ -33,9 +33,9 @@ function handleClearLocalStorage() {
   );
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  var form = document.querySelector('[data-element="dfp-form"]');
-  var clearLocalStorageButton = document.querySelector('[data-js-element="clear-local-storage"]');
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('[data-element="dfp-form"]');
+  const clearLocalStorageButton = document.querySelector('[data-js-element="clear-local-storage"]');
 
   clearLocalStorageButton.addEventListener('click', handleClearLocalStorage)
   form.addEventListener('submit', handleFormSubmit);
