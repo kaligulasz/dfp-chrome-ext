@@ -1,3 +1,28 @@
+// Initial injection of message receiver
+chrome.tabs.executeScript(null, {
+  file: 'scripts/messageReceiver.js'
+});
+
+/**
+ * Send a request for our content script
+ * @param {string} type "set"|"remove"|"get"
+ * @param {*} data just JSON in case of "setting"
+ * @returns {Promise} chain it with .then(response) to receive data in case of "get"
+ */
+function sendMessage(type, data) {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { type, data }, {}, function (error, response) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      })
+    })
+  })
+}
+
 const inputObject = {
   'preroll': '',
   'sting': '',
@@ -16,27 +41,16 @@ function handleFormSubmit(event) {
     }
   }
 
-  chrome.tabs.executeScript(
-    null, {
-      code: "window.localStorage.setItem('Spieler.DFP.debugConfig', '" + JSON.stringify(inputObject) +  "')"
-    }
-  );
-
-  window.close();
-}
-
-function handleClearLocalStorage() {
-  chrome.tabs.executeScript(
-    null, {
-      code: "window.localStorage.removeItem('Spieler.DFP.debugConfig')"
-    }
-  );
+  sendMessage('set', inputObject)
+    .then(response => {
+      window.close();
+    })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('[data-element="dfp-form"]');
   const clearLocalStorageButton = document.querySelector('[data-js-element="clear-local-storage"]');
 
-  clearLocalStorageButton.addEventListener('click', handleClearLocalStorage)
+  clearLocalStorageButton.addEventListener('click', () => sendMessage('clear'))
   form.addEventListener('submit', handleFormSubmit);
 });
