@@ -10,8 +10,10 @@ const PanelWrapper = styled.section`
  */
 export const Panel = (props) => (
   <PanelWrapper className="main-wrapper__primary">
-    <h3>{props.name}</h3>
-    {props.children}
+    <fieldset>
+      <legend>{props.name}</legend>
+      {props.children}
+    </fieldset>
   </PanelWrapper>
 )
 

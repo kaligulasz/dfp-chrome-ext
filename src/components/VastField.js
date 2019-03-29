@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { TextField } from "./TextField";
+import { ParamsKV } from "./ParamsKV";
 
 // https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=
 
@@ -15,7 +16,6 @@ export const VASTField = (props) => {
   const [customParams, setCustomParams] = useState(new Map())
 
   const handleMainFieldChange = (data) => {
-    console.log(data.currentTarget.value)
     setInputUrl(data.currentTarget.value)
 
     const match = data.currentTarget.value.match(/\?(.*)$/)
@@ -25,7 +25,10 @@ export const VASTField = (props) => {
         .forEach(kv => allParams.set(kv[0], kv[1]))
     }
 
+    console.log(...allParams.entries())
+
     if (allParams.has('iu')) {
+      console.log('iu:', allParams.get('iu'));
       setAdUnit(allParams.get('iu'));
     }
 
@@ -39,25 +42,49 @@ export const VASTField = (props) => {
     }
   }
 
+  const handleAdUnitUpdate = (event) => {
+    console.log('someone updated AD UNIT', event.currentTarget.value)
+  }
+
   // ---------
 
-  let custParamsFields = []
+  const custParamsFields = []
 
-  customParams.forEach((v, k) => {
-    custParamsFields.push(<ParamsKV key={k} value={v} />)
+  customParams.forEach((value, key) => {
+    custParamsFields.push(
+      <ParamsKV
+        custKey={key} custValue={value}
+        onKeyChange={(oldKey, newKey) => {
+          customParams.set(newKey, customParams.get(oldKey))
+          customParams.delete(oldKey)
+          setCustomParams(customParams)
+        }}
+        onValueChange={(key, newValue) => {
+          customParams.set(key, newValue)
+          setCustomParams(customParams)
+        }}
+      />
+    )
   })
 
-  return (<fieldset>
-    <TextField label={props.label} onChange={handleMainFieldChange} />
-    <div className={{ 'hidden': !!inputUrl }}>
-      <TextField
-        label="Ad unit code" value={adUnit}
-      />
-      {customParams}
-      <TextField value={finalUrl} />
-    </div>
+  return (<div>
+    <TextField
+      label={props.label}
+      onChange={handleMainFieldChange}
+    />
 
-  </fieldset>)
+    <div className={`${inputUrl ? '' : 'hidden'}`}>
+      <TextField
+        label="Ad unit code:"
+        value={adUnit}
+        onChange={handleAdUnitUpdate}
+      />
+      <p>Custom parameters:</p>
+      {custParamsFields}
+
+      <TextField label="Final URL:" value={finalUrl} readOnly={true} />
+    </div>
+  </div >)
 }
 /**
 * @typedef {Object} VASTFieldProps

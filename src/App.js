@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 
 // Components
-import Button from './components/Button';
 import { Panel } from './components/Panel';
 import { VASTField } from './components/VastField';
 

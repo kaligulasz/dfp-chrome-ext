@@ -8,31 +8,31 @@ module.exports = {
 		'scripts/messageReceiver': './src/scripts/messageReceiver',
 		'react': './src/index.js'
 	},
-
+	devtool: 'cheap-source-map',
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist')
 	},
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      }
-    ]
-  },
-	mode: 'production',
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: ['babel-loader']
+			}
+		]
+	},
+	mode: 'development',
 	plugins: [
 		new CopyPlugin([
-			{ from: './src/manifest.json', to: './'},
-			{ from: './src/images', to: './images'},
-			{ from: './src/common', to: './common'}
-		]), 
+			{ from: './src/manifest.json', to: './' },
+			{ from: './src/images', to: './images' },
+			{ from: './src/common', to: './common' }
+		]),
 		new HtmlWebpackPlugin({
 			filename: 'popup.html',
 			template: './src/popup.html',
-			excludeChunks: [ 'scripts/messageReceiver']
+			excludeChunks: ['scripts/messageReceiver']
 		})
 	]
 };
