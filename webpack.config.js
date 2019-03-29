@@ -5,13 +5,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 	entry: {
 		'popup': './src/popup.js',
-		'scripts/messageReceiver': './src/scripts/messageReceiver'
+		'scripts/messageReceiver': './src/scripts/messageReceiver',
+		'react': './src/index.js'
 	},
 
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist')
 	},
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
+  },
 	mode: 'production',
 	plugins: [
 		new CopyPlugin([
