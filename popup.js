@@ -9,13 +9,15 @@ chrome.tabs.executeScript(null, {
  * @param {*} data just JSON in case of "setting"
  */
 function sendMessage(type, data) {
-  new Promise((resolve, reject) => {
-    chrome.tabs.sendMessage(null, { type, data }, null, function (error, response) {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(response);
-      }
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, { type, data }, {}, function (error, response) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      })
     })
   })
 }
@@ -39,8 +41,9 @@ function handleFormSubmit(event) {
   }
 
   sendMessage('set', inputObject)
-
-  window.close();
+    .then(response => {
+      window.close();
+    })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
