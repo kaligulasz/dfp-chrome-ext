@@ -34,6 +34,28 @@
       <h3 class="title">Additional options</h3>
       <button class="button button--secondary" data-js-element="clear-local-storage">Clear local storage</button>
     </section>
+    <section class="main-wrapper__tertiary">
+      <form class="form" data-element="branch-form">
+        <fieldset>
+          <legend>Eplayer branch</legend>
+          <div class="switch-wrapper">
+            <span class="label">Use custom branch</span>
+            <label class="switch" for="fBranch">
+              <input type="checkbox" id="fBranch" data-element="branch-switch">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="hidden" data-element="branch-name">
+            <label class="input-wrapper" for="fBranchName">
+              <span class="label">Branch</span>
+              <input name="branch" id="fBranchName" class="input" placeholder="Branch name" required>
+            </label>
+
+            <button class="button button--primary" type="submit">Reload the page</button>
+          </div>
+        </fieldset>
+      </form>
+    </section>
   </div>
 </body>
 </html>
