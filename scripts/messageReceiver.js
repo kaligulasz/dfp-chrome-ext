@@ -26,7 +26,7 @@
             );
           } else if (message.type === 'remove') {
             window.localStorage.removeItem('Spieler.DFP.debugConfig');
-          } else if (message.type === 'value') {
+          } else if (message.type === 'get') {
             response = window.localStorage.getItem('Spieler.DFP.debugConfig');
           }
         } catch (e) {
