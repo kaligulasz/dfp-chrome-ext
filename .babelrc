@@ -1,0 +1,25 @@
+{
+  "presets": [
+    "@babel/react",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "chrome": "68"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-class-properties"],
+    ["@babel/plugin-transform-classes"],
+    "styled-components"
+  ],
+  "env": {
+    "test" : {
+      "plugins": [
+        ["rewire"]
+      ]
+    }
+  }
+}
