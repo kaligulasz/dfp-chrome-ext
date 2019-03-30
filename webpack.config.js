@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 	entry: {
 		'popup': './src/popup.js',
-		'scripts/messageReceiver': './src/scripts/messageReceiver',
-		'react': './src/index.js'
+		'scripts/background': './src/scripts/background.js',
+		'scripts/content': './src/scripts/content.js'
 	},
 	devtool: 'cheap-source-map',
 	output: {
@@ -32,7 +32,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			filename: 'popup.html',
 			template: './src/popup.html',
-			excludeChunks: ['scripts/messageReceiver']
+			excludeChunks: [ 'scripts/content.js']
 		})
 	]
 };

@@ -1,33 +1,11 @@
-// Initial injection of message receiver
-chrome.tabs.executeScript(null, {
-  file: 'scripts/messageReceiver.js'
-});
-
-/**
- * Send a request for our content script
- * @param {string} type "set"|"remove"|"get"
- * @param {*} data just JSON in case of "setting"
- * @returns {Promise} chain it with .then(response) to receive data in case of "get"
- */
-function sendMessage(type, data) {
-  return new Promise((resolve, reject) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { type, data }, {}, function (error, response) {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
-        }
-      });
-    });
-  });
-}
+import sendMessage from './helpers/sendMessage'
+import setIndicator from './helpers/setIndicator'
 
 const inputObject = {
-  'preroll': '',
-  'sting': '',
-  'postroll': '',
-  'parameters': {}
+  preroll: '',
+  sting: '',
+  postroll: '',
+  parameters: {}
 };
 
 function handleShowBranchInput() {
@@ -49,6 +27,7 @@ function handleFormSubmit(event) {
 
   sendMessage('set', inputObject)
     .then(response => {
+      setIndicator(true)
       window.close();
     });
 }
@@ -87,7 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
     branchForm.elements["branch"].value = obj.branchName.toString();
   });
 
-  clearLocalStorageButton.addEventListener('click', () => sendMessage('remove'));
+  clearLocalStorageButton.addEventListener('click', () => {
+    sendMessage('remove').then(() => {
+      setIndicator(false)
+    })
+  });
+
   form.addEventListener('submit', handleFormSubmit);
   switchInput.addEventListener('change', handleShowBranchInput);
   branchForm.addEventListener('submit', handleUpdateUrl);
